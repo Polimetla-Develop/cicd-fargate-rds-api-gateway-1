@@ -28,8 +28,7 @@ public class EmployeeController {
         newEmployee.setEmployeeId(employee.getEmployeeId());
         newEmployee.setFirstName(employee.getFirstName());
         newEmployee.setLastName(employee.getLastName());
-        newEmployee.setAge(employee.getAge());
-        newEmployee.setGender(employee.getGender());
+        newEmployee.setAge(employee.getAge());        
         employeeService.createEmployee(newEmployee);
     }
 
