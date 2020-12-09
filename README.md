@@ -2,7 +2,7 @@
 
 ## The *`README.md`* is different for each branch. Please read the instructions carefully
 
-Please follow the numbering on each branch to track the progress step by step.
+Please follow the numbering on each branch to track the progress step by step. 
 **This branch is step number 3**
 
 The workflow for step3 looks like this
