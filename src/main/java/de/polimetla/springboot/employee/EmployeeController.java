@@ -24,7 +24,13 @@ public class EmployeeController {
 
     @RequestMapping(method = RequestMethod.POST)
     public void createEmployee(@RequestBody Employee employee) {
-        employeeService.createEmployee(employee);
+        Employee newEmployee = new Employee();
+        newEmployee.setEmployeeId(employee.getEmployeeId());
+        newEmployee.setFirstName(employee.getFirstName());
+        newEmployee.setLastName(employee.getLastName());
+        newEmployee.setAge(employee.getAge());
+        newEmployee.setGender(employee.getGender());
+        employeeService.createEmployee(newEmployee);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{employeeId}")
