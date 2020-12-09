@@ -17,7 +17,10 @@
     <description>Springboot application packed as Docker container to be deployed on AWS FARGATE</description>
 
     <properties>
-        <java.version>11</java.version>
+             <java.version>11</java.version>
+             <sonar.projectKey>S-Polimetla_cicd-fargate-rds-api-gateway</sonar.projectKey>
+             <sonar.organization>s-polimetla</sonar.organization>
+             <sonar.host.url>https://sonarcloud.io</sonar.host.url>    
     </properties>
 
     <dependencies>
