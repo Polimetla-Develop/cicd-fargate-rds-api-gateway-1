@@ -159,7 +159,7 @@ Resources:
             Value: !Ref ArtifactsBucket
           - Name: ECR_REPO
             Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}
-          - Name: ECR_PREFIX
+          - Name: ECR_REGISTRY
             Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com
 
   ECRRepository:

@@ -1,11 +1,12 @@
 # Build
-FROM ${PREFIX}/maven:3.6.3-jdk-11 AS build
+ARG REGISTRY=docker.io
+FROM ${REGISTRY}/maven:3.6.3-jdk-11 AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
 RUN mvn -f /home/app/pom.xml clean package
 
 # Package
-FROM ${PREFIX}/openjdk:11-jre-slim
-COPY --from=build /home/app/target/employee-ecs-springboot.jar employee-ecs-springboot.jar
+FROM ${REGISTRY}/openjdk:11-jre-slim
+COPY --from=build /home/app/target/application.jar application.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "employee-ecs-springboot.jar"]
+ENTRYPOINT ["java", "-jar", "application.jar"]

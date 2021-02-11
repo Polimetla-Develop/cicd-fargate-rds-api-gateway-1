@@ -10,10 +10,9 @@ phases:
       - aws s3 cp swagger.yaml s3://$S3_BUCKET
   build:
     commands:
-      - echo $ECR_PREFIX
       - $(aws ecr get-login --no-include-email --region $AWS_REGION) # Login to AWS ECR
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Extracting first 7 characters of the commitID to use it as ImageTag
-      - docker build --build-arg PREFIX=$ECR_PREFIX -t $ECR_REPO:latest . # Build the image with latest tag
+      - docker build --build-arg REGISTRY=$ECR_REGISTRY -t $ECR_REPO:latest . # Build the image with latest tag
       - docker tag $ECR_REPO:latest $ECR_REPO:$IMAGE_TAG # Have an additional tag for the image relating to Git Commit
   post_build:
     commands:
