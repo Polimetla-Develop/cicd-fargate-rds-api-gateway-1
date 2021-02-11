@@ -158,7 +158,9 @@ Resources:
           - Name: S3_BUCKET
             Value: !Ref ArtifactsBucket
           - Name: ECR_REPO
-            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}      
+            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}
+          - Name: ECR_PREFIX
+            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com
 
   ECRRepository:
     Type: AWS::ECR::Repository
