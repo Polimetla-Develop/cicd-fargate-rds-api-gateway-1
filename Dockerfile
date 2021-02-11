@@ -7,6 +7,6 @@ RUN mvn -f /home/app/pom.xml clean package
 
 # Package
 FROM ${REGISTRY}/openjdk:11-jre-slim
-COPY --from=build /home/app/target/application.jar application.jar
+COPY --from=build /home/app/target/employee-ecs-springboot.jar employee-ecs-springboot.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "application.jar"]
+ENTRYPOINT ["java", "-jar", "employee-ecs-springboot.jar"]
