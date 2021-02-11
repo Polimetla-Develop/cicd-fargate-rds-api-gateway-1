@@ -10,7 +10,14 @@ phases:
       - aws s3 cp swagger.yaml s3://$S3_BUCKET
   build:
     commands:
+      - echo $CODEBUILD_WEBHOOK_ACTOR_ACCOUNT_ID
       - $(aws ecr get-login --no-include-email --region $AWS_REGION) # Login to AWS ECR
+      - docker pull maven:3.6.3-jdk-11
+      - docker tag maven:3.6.3-jdk-11 464626918444.dkr.ecr.eu-west-1.amazonaws.com/maven:3.6.3-jdk-11
+      - docker push 464626918444.dkr.ecr.eu-west-1.amazonaws.com/maven:3.6.3-jdk-11
+      - docker pull openjdk:11-jre-slim
+      - docker tag openjdk:11-jre-slim 464626918444.dkr.ecr.eu-west-1.amazonaws.com/openjdk:11-jre-slim
+      - docker push 464626918444.dkr.ecr.eu-west-1.amazonaws.com/openjdk:11-jre-slim
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Extracting first 7 characters of the commitID to use it as ImageTag
       - docker build -t $ECR_REPO:latest . # Build the image with latest tag
       - docker tag $ECR_REPO:latest $ECR_REPO:$IMAGE_TAG # Have an additional tag for the image relating to Git Commit
