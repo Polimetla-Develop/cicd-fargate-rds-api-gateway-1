@@ -23,6 +23,10 @@ Parameters:
     Type: String
     Description: The name of the ECR Repository  
     Default: employee-ecs-image
+  RegistryAlias:
+    Type: String
+    Description: Alias name for the public ECR Repo. Default or Custom
+    Default: g1m6s6n3
 
 Resources:
 
@@ -158,7 +162,9 @@ Resources:
           - Name: S3_BUCKET
             Value: !Ref ArtifactsBucket
           - Name: ECR_REPO
-            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}      
+            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}
+          - Name: ECR_REGISTRY_ALIAS
+            Value: !Ref RegistryAlias
 
   ECRRepository:
     Type: AWS::ECR::Repository

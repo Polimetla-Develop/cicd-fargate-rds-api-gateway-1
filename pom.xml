@@ -53,7 +53,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>employee-ecs-springboot</finalName>
+        <finalName>employee-api</finalName>
     </build>
 
 </project>
