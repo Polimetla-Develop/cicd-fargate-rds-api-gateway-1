@@ -10,11 +10,11 @@ Parameters:
   RepositoryOwner:
     Type: String
     Description: The owner of the GitHub repository.
-    Default: S-Polimetla
+    Default: Polimetla-Develop
   RepositoryName:
     Type: String
     Description: The name of the GitHub repository.
-    Default: cicd-fargate-rds-api-gateway
+    Default: cicd-fargate-rds-api-gateway-1
   RepositoryBranch:
     Type: String
     Description: The name of the branch.
@@ -22,7 +22,11 @@ Parameters:
   DockerImageRepository: # Should be the same as 'DockerImageRepository' in config.json
     Type: String
     Description: The name of the ECR Repository  
-    Default: employee-ecs-image
+    Default: employee-api
+  RegistryAlias:
+    Type: String
+    Description: Alias name for the public ECR Repo. Default or Custom
+    Default: g1m6s6n3
 
 Resources:
 
@@ -158,7 +162,9 @@ Resources:
           - Name: S3_BUCKET
             Value: !Ref ArtifactsBucket
           - Name: ECR_REPO
-            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}      
+            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}
+          - Name: ECR_REGISTRY_ALIAS
+            Value: !Ref RegistryAlias
 
   ECRRepository:
     Type: AWS::ECR::Repository

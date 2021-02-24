@@ -1,6 +1,6 @@
 {
   "Parameters": {
-    "DockerImageRepository": "employee-ecs-image",
+    "DockerImageRepository": "employee-api",
     "ImageTag": "latest",
     "NetworkStackName": "network-config",
     "S3Bucket": "de.polimetla.codepipeline.employee-service",
