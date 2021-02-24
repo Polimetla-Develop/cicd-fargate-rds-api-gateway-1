@@ -26,7 +26,7 @@ Parameters:
   RegistryAlias:
     Type: String
     Description: Alias name for the public ECR Repo. Default or Custom
-    Default: g1m6s6n3
+    Default: polimetla
 
 Resources:
 
