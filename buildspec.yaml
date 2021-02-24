@@ -3,7 +3,6 @@ version: 0.2
 phases:
   install:
     commands:
-      - echo $CODEBUILD_SOURCE_VERSION
       - apt-get -y update && apt-get -y install moreutils # For using 'sponge' later
   pre_build:
     commands:
