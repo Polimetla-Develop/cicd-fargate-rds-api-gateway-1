@@ -18,7 +18,7 @@ Parameters:
   RepositoryBranch:
     Type: String
     Description: The name of the branch.
-    Default: 3-elb-api-gateway
+    Default: 3.1-api-gateway-lambda-integration
   DockerImageRepository: # Should be the same as 'DockerImageRepository' in config.json
     Type: String
     Description: The name of the ECR Repository  
