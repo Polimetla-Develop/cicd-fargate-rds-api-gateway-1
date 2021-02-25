@@ -22,7 +22,7 @@ Parameters:
   DockerImageRepository: # Should be the same as 'DockerImageRepository' in config.json
     Type: String
     Description: The name of the ECR Repository  
-    Default: employee-api
+    Default: employee-ecs-image
   RegistryAlias:
     Type: String
     Description: Alias name for the public ECR Repo. Default or Custom
