@@ -20,7 +20,7 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: !Select [0, !GetAZs '']
       CidrBlock: !Sub 10.0.0.0/20
-      MapPublicIpOnLaunch: true
+      MapPublicIpOnLaunch: false
 
   Subnet2:
     Type: AWS::EC2::Subnet
@@ -28,10 +28,10 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: !Select [1, !GetAZs '']
       CidrBlock: !Sub 10.0.32.0/20
-      MapPublicIpOnLaunch: true
+      MapPublicIpOnLaunch: false
 
-  InternetGateway:
-    Type: AWS::EC2::InternetGateway
+  # InternetGateway:
+    # Type: AWS::EC2::InternetGateway
 
   VPCGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -56,13 +56,13 @@ Resources:
       SubnetId: !Ref Subnet2
       RouteTableId: !Ref RouteTable
 
-  InternetRoute:
-    Type: AWS::EC2::Route
-    DependsOn: VPCGatewayAttachment
-    Properties:
-      GatewayId: !Ref InternetGateway
-      RouteTableId: !Ref RouteTable
-      DestinationCidrBlock: 0.0.0.0/0
+  # InternetRoute:
+    # Type: AWS::EC2::Route
+    # DependsOn: VPCGatewayAttachment
+    # Properties:
+      # GatewayId: !Ref InternetGateway
+      # RouteTableId: !Ref RouteTable
+      # DestinationCidrBlock: 0.0.0.0/0
 
   LoadBalancerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
