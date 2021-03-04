@@ -15,16 +15,16 @@ phases:
   build:
     commands:
       - docker-compose up -d
-      - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Extracting first 7 characters of the commitID to use it as ImageTag
-      - docker build -t $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest --build-arg REGISTRY=$ECR_PUBLIC_REGISTRY . # Build the image with latest tag
-      - docker tag $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest $ECR_PRIVATE_REGISTRY/$ECR_REPO:$IMAGE_TAG # Have an additional tag for the image relating to Git Commit
-  post_build:
-    commands:
-      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $$ECR_PRIVATE_REGISTRY # Login to AWS ECR
-      - docker push $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest # Pushing the image to AWS ECR
-      - docker push $ECR_PRIVATE_REGISTRY/$ECR_REPO:$IMAGE_TAG
-      - jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config-dev.json | sponge config-dev.json # Changes the ImageTag value for the Task Definition in deploy stage
-      - jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config-prod.json | sponge config-prod.json
+      #- IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Extracting first 7 characters of the commitID to use it as ImageTag
+      #- docker build -t $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest --build-arg REGISTRY=$ECR_PUBLIC_REGISTRY . # Build the image with latest tag
+      #- docker tag $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest $ECR_PRIVATE_REGISTRY/$ECR_REPO:$IMAGE_TAG # Have an additional tag for the image relating to Git Commit
+  #post_build:
+    #commands:
+      #- aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR_PRIVATE_REGISTRY # Login to AWS ECR
+      #- docker push $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest # Pushing the image to AWS ECR
+      #- docker push $ECR_PRIVATE_REGISTRY/$ECR_REPO:$IMAGE_TAG
+      #- jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config-dev.json | sponge config-dev.json # Changes the ImageTag value for the Task Definition in deploy stage
+      #- jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config-prod.json | sponge config-prod.json
 
 artifacts:
   files: # All the files which makes out of the build stage and shall be forwarded to the next stage are mentioned here. Every other file is no more available in the pipeline
