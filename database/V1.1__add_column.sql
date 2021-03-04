@@ -1,1 +1,1 @@
-CREATE TABLE employee.personal ADD COLUMN age int;
+ALTER TABLE employee.personal ADD COLUMN age int;
