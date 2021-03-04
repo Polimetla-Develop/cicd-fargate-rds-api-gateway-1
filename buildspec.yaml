@@ -14,8 +14,8 @@ phases:
       - export FLYWAY_PASSWORD=postgres
   build:
     commands:
-      - exit $(docker-compose run --rm flyway; echo $?)
-      #- docker-compose up --abort-on-container-exit
+      #- exit $(docker-compose run --rm flyway; echo $?)
+      - docker-compose up --abort-on-container-exit
       #- echo $
       #- IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Extracting first 7 characters of the commitID to use it as ImageTag
       #- docker build -t $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest --build-arg REGISTRY=$ECR_PUBLIC_REGISTRY . # Build the image with latest tag
