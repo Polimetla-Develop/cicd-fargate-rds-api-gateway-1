@@ -20,7 +20,7 @@ phases:
       - docker tag $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest $ECR_PRIVATE_REGISTRY/$ECR_REPO:$IMAGE_TAG # Have an additional tag for the image relating to Git Commit
   post_build:
     commands:
-      - aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 464626918444.dkr.ecr.eu-west-1.amazonaws.com # Login to AWS ECR
+      - aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $$ECR_PRIVATE_REGISTRY # Login to AWS ECR
       - docker push $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest # Pushing the image to AWS ECR
       - docker push $ECR_PRIVATE_REGISTRY/$ECR_REPO:$IMAGE_TAG
       - jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config-dev.json | sponge config-dev.json # Changes the ImageTag value for the Task Definition in deploy stage
