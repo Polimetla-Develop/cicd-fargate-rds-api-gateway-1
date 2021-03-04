@@ -10,11 +10,11 @@ Parameters:
   RepositoryOwner:
     Type: String
     Description: The owner of the GitHub repository.
-    Default: S-Polimetla
+    Default: Polimetla-Develop
   RepositoryName:
     Type: String
     Description: The name of the GitHub repository.
-    Default: cicd-fargate-rds-api-gateway
+    Default: cicd-fargate-rds-api-gateway-1
   RepositoryBranch:
     Type: String
     Description: The name of the branch.
