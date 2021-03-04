@@ -28,7 +28,8 @@ services:
     volumes:
       - ./database:/tmp/database
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
 volumes:
   postgres:
