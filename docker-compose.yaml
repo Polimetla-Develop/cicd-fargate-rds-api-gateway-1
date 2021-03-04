@@ -5,6 +5,8 @@ services:
   postgres:
     container_name: postgres_container
     image: $ECR_PUBLIC_REGISTRY/postgres:12
+    env_file:
+      - .env
     volumes:
       - ./postgres_data:/tmp/data
       - postgres:/data/postgres
@@ -14,6 +16,8 @@ services:
   flyway:
     container_name: flyway_container
     image: $ECR_PUBLIC_REGISTRY/flyway/flyway:7
+    env_file:
+      - .env
     restart: on-failure:3
     command: info migrate
     volumes:
