@@ -24,7 +24,7 @@ services:
     env_file:
       - .env
     restart: on-failure:3
-    command: info migrate
+    command: info migrate info
     volumes:
       - ./database:/tmp/database
     depends_on:
