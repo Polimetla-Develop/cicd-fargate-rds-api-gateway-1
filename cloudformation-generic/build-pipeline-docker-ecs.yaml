@@ -21,8 +21,12 @@ Parameters:
     Default: 2-rds-fargate-secrets
   DockerImageRepository: # Should be the same as 'DockerImageRepository' in config.json
     Type: String
-    Description: The name of the ECR Repository  
-    Default: employee-ecs-image
+    Description: The name of the ECR Repository
+    Default: employee-api
+  RegistryAlias:
+    Type: String
+    Description: Alias name for the public ECR Repo. Default or Custom
+    Default: polimetla
 
 Resources:
 
@@ -45,7 +49,7 @@ Resources:
                 Branch: !Ref RepositoryBranch
                 OAuthToken: "{{resolve:ssm:/github/AuthToken:1}}" # Should be changed
               OutputArtifacts:
-              - Name: SourceOutput
+                - Name: SourceOutput
         - Name: Build
           Actions:
             - Name: Build
@@ -127,7 +131,7 @@ Resources:
                 ActionMode: CHANGE_SET_EXECUTE
                 ChangeSetName: !Sub ${ProjectName}-prod-changeset
                 StackName: !Sub ${ProjectName}-prod
-              RunOrder: 2        
+              RunOrder: 2
       RoleArn: !GetAtt  CodePipelineServiceRole.Arn
       ArtifactStore:
         Type: S3
@@ -158,7 +162,9 @@ Resources:
           - Name: S3_BUCKET
             Value: !Ref ArtifactsBucket
           - Name: ECR_REPO
-            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}      
+            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}
+          - Name: ECR_REGISTRY_ALIAS
+            Value: !Ref RegistryAlias
 
   ECRRepository:
     Type: AWS::ECR::Repository
@@ -179,7 +185,7 @@ Resources:
         Rules:
           - Id: DeleteBuildArtifactsAfterOneWeek
             ExpirationInDays: 7
-            Status: Enabled      
+            Status: Enabled
 
   CodePipelineServiceRole:
     Type: AWS::IAM::Role
@@ -203,7 +209,7 @@ Resources:
                   - codebuild:BatchGetBuilds
                   - codebuild:StartBuild
                 Resource:
-                  - !GetAtt CodeBuildProject.Arn                  
+                  - !GetAtt CodeBuildProject.Arn
               - Effect: Allow
                 Action:
                   - cloudformation:DescribeStacks
@@ -253,17 +259,17 @@ Resources:
                   - logs:PutLogEvents
                 Resource:
                   - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${ProjectName}-build-package
-                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${ProjectName}-build-package:*                  
+                  - !Sub arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/codebuild/${ProjectName}-build-package:*
               - Effect: Allow
                 Action:
                   - s3:*
                 Resource:
-                  - !Sub arn:aws:s3:::${ArtifactsBucket}/*                  
+                  - !Sub arn:aws:s3:::${ArtifactsBucket}/*
               - Effect: Allow
                 Action:
                   - ecr:*
                 Resource:
-                  - "*" 
+                  - "*"
                   # !GetAtt ECRRepository.Arn would fail since login to ECR is generic
 
   #
@@ -285,7 +291,7 @@ Resources:
         - PolicyName: CloudFormationTrustPolicy
           PolicyDocument:
             Version: 2012-10-17
-            Statement:              
+            Statement:
               - Effect: Allow
                 Action:
                   - ec2:*
