@@ -4,7 +4,7 @@ services:
 
   postgres:
     container_name: postgres_container
-    image: public.ecr.aws/$ECR_REGISTRY_ALIAS/postgres:11
+    image: $ECR_PUBLIC_REGISTRY/postgres:12
     volumes:
       - ./postgres_data:/tmp/data
       - postgres:/data/postgres
@@ -13,7 +13,7 @@ services:
 
   flyway:
     container_name: flyway_container
-    image: public.ecr.aws/$ECR_REGISTRY_ALIAS/flyway/flyway
+    image: $ECR_PUBLIC_REGISTRY/flyway/flyway:7
     restart: on-failure:3
     command: info migrate
     volumes:
