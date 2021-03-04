@@ -1,0 +1,1 @@
+CREATE TABLE employee.personal ADD COLUMN age int;

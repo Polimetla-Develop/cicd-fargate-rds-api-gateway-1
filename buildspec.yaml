@@ -4,16 +4,25 @@ phases:
   install:
     commands:
       - apt-get -y update && apt-get -y install moreutils # For using 'sponge' later
+      - export POSTGRES_USER=postgres
+      - export POSTGRES_PASSWORD=postgres
+      - export POSTGRES_DB=employee
+      - export PGDATA=/data/postgres
+      - export FLYWAY_LOCATIONS=filesystem:/tmp/database
+      - export FLYWAY_URL=jdbc:postgresql://postgres:5432/employee
+      - export FLYWAY_USER=postgres
+      - export FLYWAY_PASSWORD=postgres
   build:
     commands:
+      - docker-compose up -d
       - IMAGE_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7) # Extracting first 7 characters of the commitID to use it as ImageTag
-      - docker build -t $ECR_REPO:latest --build-arg REGISTRY=public.ecr.aws/$ECR_REGISTRY_ALIAS . # Build the image with latest tag
-      - docker tag $ECR_REPO:latest $ECR_REPO:$IMAGE_TAG # Have an additional tag for the image relating to Git Commit
+      - docker build -t $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest --build-arg REGISTRY=$ECR_PUBLIC_REGISTRY . # Build the image with latest tag
+      - docker tag $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest $ECR_PRIVATE_REGISTRY/$ECR_REPO:$IMAGE_TAG # Have an additional tag for the image relating to Git Commit
   post_build:
     commands:
-      - $(aws ecr get-login --no-include-email --region $AWS_REGION) # Login to AWS ECR
-      - docker push $ECR_REPO:latest # Pushing the image to AWS ECR
-      - docker push $ECR_REPO:$IMAGE_TAG
+      - aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 464626918444.dkr.ecr.eu-west-1.amazonaws.com # Login to AWS ECR
+      - docker push $ECR_PRIVATE_REGISTRY/$ECR_REPO:latest # Pushing the image to AWS ECR
+      - docker push $ECR_PRIVATE_REGISTRY/$ECR_REPO:$IMAGE_TAG
       - jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config-dev.json | sponge config-dev.json # Changes the ImageTag value for the Task Definition in deploy stage
       - jq '.Parameters.ImageTag = "'$IMAGE_TAG'"' config-prod.json | sponge config-prod.json
 

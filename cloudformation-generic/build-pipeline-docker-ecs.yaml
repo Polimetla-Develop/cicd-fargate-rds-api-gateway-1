@@ -161,10 +161,12 @@ Resources:
         EnvironmentVariables:
           - Name: S3_BUCKET
             Value: !Ref ArtifactsBucket
+          - Name: ECR_PRIVATE_REGISTRY
+            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com
           - Name: ECR_REPO
-            Value: !Sub ${AWS::AccountId}.dkr.ecr.${AWS::Region}.amazonaws.com/${DockerImageRepository}
-          - Name: ECR_REGISTRY_ALIAS
-            Value: !Ref RegistryAlias
+            Value: !Ref DockerImageRepository
+          - Name: ECR_PUBLIC_REGISTRY
+            Value: !Sub public.ecr.aws/${RegistryAlias}
 
   ECRRepository:
     Type: AWS::ECR::Repository

@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+
+  postgres:
+    container_name: postgres_container
+    image: public.ecr.aws/$ECR_REGISTRY_ALIAS/postgres:11
+    volumes:
+      - ./postgres_data:/tmp/data
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+
+  flyway:
+    container_name: flyway_container
+    image: public.ecr.aws/$ECR_REGISTRY_ALIAS/flyway/flyway
+    restart: on-failure:3
+    command: info migrate
+    volumes:
+      - ./database:/tmp/database
+    depends_on:
+      - postgres
+
+volumes:
+  postgres:
