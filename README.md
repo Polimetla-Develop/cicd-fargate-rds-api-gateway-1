@@ -3,7 +3,7 @@
 ## The *`README.md`* is different for each branch. Please read the instructions carefully
 
 Please follow the numbering on each branch to track the progress step by step. 
-**This branch is step number 3**
+**This branch is step number 3** 
 
 The workflow for step3 looks like this
 ![alt text](./Application_Flow.png "Application flow")
