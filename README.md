@@ -27,7 +27,7 @@ The API definition will have the following as mandatory fields for POST requests
       - lastName
       - age
 ````
-This means, any API request which do not fulfill the criteria either by omitting these fields or with inappropriate data types will be filtered out at API gateway without even reaching the Application layer.
+This means, any API request which do not fulfill the criteria either by omitting these fields or with inappropriate data types will be filtered out at API gateway without even reaching the Application layer. 
 
 ### If you are starting with the branch directly, here is the order of creation of resources
 
