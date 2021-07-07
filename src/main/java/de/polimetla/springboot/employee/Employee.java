@@ -13,18 +13,16 @@ public class Employee {
     private Long employeeId;
     private String firstName;
     private String lastName;
-    private int age;
-    private Gender gender;
+    private int age;    
 
     public Employee() {
     }
 
-    public Employee(Long employeeId, String firstName, String lastName, int age, Gender gender) {
+    public Employee(Long employeeId, String firstName, String lastName, int age) {
         this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
-        this.gender = gender;
+        this.age = age;        
     }
 
     public Long getEmployeeId() {
@@ -58,13 +56,4 @@ public class Employee {
     public void setAge(int age) {
         this.age = age;
     }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
 }

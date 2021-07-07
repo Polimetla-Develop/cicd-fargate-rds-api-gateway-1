@@ -12,27 +12,32 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @RequestMapping("")
+    @GetMapping("")
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
-    @RequestMapping("/{employeeId}")
+    @GetMapping("/{employeeId}")
     public Employee getEmployeeById(@PathVariable Long employeeId) {
         return employeeService.getEmployeeById(employeeId);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping("")
     public void createEmployee(@RequestBody Employee employee) {
-        employeeService.createEmployee(employee);
+        Employee newEmployee = new Employee();
+        newEmployee.setEmployeeId(employee.getEmployeeId());
+        newEmployee.setFirstName(employee.getFirstName());
+        newEmployee.setLastName(employee.getLastName());
+        newEmployee.setAge(employee.getAge());        
+        employeeService.createEmployee(newEmployee);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{employeeId}")
+    @PutMapping("/{employeeId}")
     public void updateEmployee(@RequestBody Employee employee, @PathVariable Long employeeId) {
         employeeService.updateEmployee(employee, employeeId);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{employeeId}")
+    @DeleteMapping("/{employeeId}")
     public void deleteEmployee(@PathVariable Long employeeId) {
         employeeService.deleteEmployee(employeeId);
     }
